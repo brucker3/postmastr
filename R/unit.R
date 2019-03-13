@@ -1,3 +1,81 @@
+#' Does Unit Name Dictionary Return Any Matches
+#'
+#' @description Determine whether the dictionary returns any matches.
+#'
+#' @usage pm_Unit_any(.data, dictionary)
+#'
+#' @param .data A postmastr object created with \link{pm_prep}
+#' @param dictionary A tbl created with \code{pm_dictionary} to be used
+#'     as a master list for Units.
+#'
+#' @return If \code{scalar = TRUE}, a single logical scalar is returned that is
+#'     \code{TRUE} if the data contains at least one Unit name from the given
+#'     dictionary and \code{FALSE} if they do not.
+#'
+#' @export
+pm_unit_any <- function(.data, dictionary){
+
+  # check for object and key variables
+  if (pm_has_uid(.data) == FALSE){
+    stop("The variable 'pm.uid' is missing from the given object. Create a postmastr object with pm_identify and pm_prep before proceeding.")
+  }
+
+  if (pm_has_address(.data) == FALSE){
+    stop("The variable 'pm.address' is missing from the given object. Create a postmastr object with pm_prep before proceeding.")
+  }
+
+  # test dictionary
+  # do I want pm_unit_detect or pm_has_unit
+  .data <- pm_unit_detect(.data, dictionary = dictionary)
+
+  # create output
+  out <- any(.data$pm.hasUnit)
+
+  # return output
+  return(out)
+
+}
+
+
+#' Does Unit Name Dictionary Return a Match for All Observations
+#'
+#' @description Determine whether the dictionary returns any matches.
+#'
+#' @usage pm_unit_all(.data, dictionary)
+#'
+#' @param .data A postmastr object created with \link{pm_prep}
+#' @param dictionary A tbl created with \code{pm_dictionary} to be used
+#'     as a master list for cities.
+#'
+#' @return If \code{scalar = TRUE}, a single logical scalar is returned that is
+#'     \code{TRUE} if the data contains at least one unit name from the given
+#'     dictionary and \code{FALSE} if they do not.
+#'
+#' @export
+pm_unit_all <- function(.data, dictionary){
+
+  # check for object and key variables
+  if (pm_has_uid(.data) == FALSE){
+    stop("The variable 'pm.uid' is missing from the given object. Create a postmastr object with pm_identify and pm_prep before proceeding.")
+  }
+
+  if (pm_has_address(.data) == FALSE){
+    stop("The variable 'pm.address' is missing from the given object. Create a postmastr object with pm_prep before proceeding.")
+  }
+
+  # test dictionary
+  # do I want pm_unit_detect or pm_has_unit
+  .data <- pm_unit_detect(.data, dictionary = dictionary)
+
+  # create output
+  out <- all(.data$pm.hasCity)
+
+  # return output
+  return(out)
+
+}
+
+
 #' Detect Presence of Unit
 #'
 #' @description Determine the presence of unit types within a string.

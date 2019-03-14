@@ -580,8 +580,8 @@ pm_append <- function(type, input, output, locale = "us"){
     } else if (type == "unit"){
 
      out <- data.frame(
-        houseSuf.output = c(output),
-        houseSuf.input = c(input),
+        unitSuf.output = c(output),
+        unitSuf.input = c(input),
         stringsAsFactors = FALSE)
 
     }
@@ -685,3 +685,4 @@ pm_append <- function(type, input, output, locale = "us"){
 #' head(dic_us_unit)
 #'
 "dic_us_unit"
+

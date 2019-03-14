@@ -153,3 +153,40 @@ pm_has_unit <- function(.data, dictionary, scalar = TRUE, locale = "us"){
 
 }
 
+# standardize us unit
+pm_std_unit_us <- function(.data, var, dictionary){
+
+  # create bindings for global variables
+  . = unit.input = unit.output = unit.type = NULL
+
+  # save parameters to list
+  paramList <- as.list(match.call())
+
+  # unquote
+  if (!is.character(paramList$var)) {
+    varQ <- rlang::enquo(var)
+  } else if (is.character(paramList$var)) {
+    varQ <- rlang::quo(!! rlang::sym(var))
+  }
+
+  varQN <- rlang::quo_name(rlang::enquo(var))
+
+  dictionary %>%
+    dplyr::rename(!!varQ := unit.input) -> dictionary
+
+  # standardize
+  .data %>%
+    dplyr::left_join(., dictionary, by = varQN) %>%
+    dplyr::mutate(!!varQ := ifelse(is.na(unit.output) == FALSE, unit.output, !!varQ)) %>%
+    dplyr::select(-unit.output, -unit.type) -> out
+
+  # return output
+  return(out)
+
+}
+
+
+
+
+
+

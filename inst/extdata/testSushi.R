@@ -1,4 +1,5 @@
 devtools::load_all()
+install.packages('rgdal')
 
 # prep
 sushi1 <- pm_identify(postmastr::sushi1, var = "address")

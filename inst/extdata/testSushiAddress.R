@@ -1,4 +1,10 @@
+install.packages('rgdal')
 devtools::load_all()
+install.packages("magrittr") # only needed the first time you use it
+install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # need to run every time you start R and want to use %>%
+library(dplyr)
+install.packages("postmastr")
 
 postmastr::sushi2 %>%
   pm_identify(var = address) %>%
